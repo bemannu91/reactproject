@@ -7,24 +7,28 @@ export function FormCreateSet() {
         defaultValues: {
             name: "",
             description: ""
-        }
+        },
+        mode: "onChange", 
     });
 
     const [count, setCount] = React.useState(0);
 
+    
     React.useEffect(() => {
-        if(count !== 0){
+        if (count > 0) {
             console.log(`Отправка формы: ${count}`);
             alert(`Отправка формы: ${count}`);
         }
+    }, [count]); 
 
-    });
+    const onSubmit = (data) => {
+        setCount(prev => prev + 1);
+        console.log("Данные формы:", data);
+     
+    };
 
     return (
-        <form className="form-container" onSubmit={handleSubmit((data) => {
-            setCount(count + 1);
-            console.log(data);
-        },[count])}>
+        <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
             <div className="form__item">
                 <label htmlFor="name">Название набора:</label>
                 <input
